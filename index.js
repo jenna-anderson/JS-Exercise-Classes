@@ -90,10 +90,9 @@ class Airplane {
         this.tank = this.tank - (distance / this.milesPerGallon);
       }
       else{
+        this.odometer += (this.milesPerGallon * this.tank);
         const tank = this.tank;
-        const odometer = this.odometer;
         this.tank = 0;
-        this.odometer += (this.milesPerGallon * tank);
         return `I ran out of fuel at ${this.milesPerGallon * tank} miles!`;
       }
     }
@@ -157,8 +156,9 @@ console.log(jenna.speak());
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   }
-  adjustGrade(student){
-    student.grade += Math.floor(Math.random() * (100 - student.grade)) + 1;
+  adjustGrade(grade){
+    const newGrade = grade + Math.floor(Math.random() * (100 - grade)) + 1;
+    return newGrade;
   }
  }
 
@@ -196,13 +196,16 @@ console.log(jenna.speak());
     return `${this.name} has begun sprint challenge on ${subject}`;
   }
   graduate(instructor){
-    while(this.grade < 70){ // not looping like I'd hope
-      if(this.grade >= 70){
-        return `${this.name} can graduate!`;
+    let count = 0;
+    if(this.grade >= 70){
+      return `${this.name} can graduate!`;
+    }
+    else{
+      while(this.grade < 70){
+          this.grade = instructor.adjustGrade(this.grade);
+          count ++;
       }
-      else{
-        instructor.adjustGrade(kali); // trying to figure out how to not hard code the object
-      }
+      return`After regrading ${count} times, ${this.name} can graduate with a grade of ${this.grade}!`;
     }
   }
  }
@@ -264,7 +267,6 @@ console.log(jenna.speak());
   // console.log(kali.listSubjects());
   console.log(kali.grade);
   console.log(kali.graduate(sherry));
- 
 
 
   //End of Challenge
