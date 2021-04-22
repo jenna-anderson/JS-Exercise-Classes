@@ -157,6 +157,9 @@ console.log(jenna.speak());
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  adjustGrade(student){
+    student.grade += Math.floor(Math.random() * (100 - student.grade)) + 1;
+  }
  }
 
 
@@ -181,15 +184,26 @@ console.log(jenna.speak());
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = Math.floor(Math.random() * 100) + 1;
   }
   listSubjects(){
-    return `Loving ${this.favSubjects}!`;
+    return `Loving ${this.favSubjects.join(', ')}!`;
   }
   PRAssignment(subject){
     return `${this.name} has submitted a PR for ${subject}`;
   }
   sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  graduate(instructor){
+    while(this.grade < 70){ // not looping like I'd hope
+      if(this.grade >= 70){
+        return `${this.name} can graduate!`;
+      }
+      else{
+        instructor.adjustGrade(kali); // trying to figure out how to not hard code the object
+      }
+    }
   }
  }
   
@@ -227,6 +241,30 @@ console.log(jenna.speak());
         + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
         + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
   */
+
+  const kali = new Student({
+    name: 'Kali',
+    age: 33,
+    location: 'Longmont',
+    previousBackground: 'taxi driver',
+    className: 'web43',
+    favSubjects: ['math', 'reading', 'Javascript']
+  });
+
+  const sherry = new Instructor({
+    name: 'Sherry',
+    age: 37,
+    location: 'Lyons',
+    specialty: 'redux',
+    favLanguage: 'javascript',
+    catchPhrase: 'If it is what it be, it do'
+   })
+
+  // console.log(kali.sprintChallenge('classes'));
+  // console.log(kali.listSubjects());
+  console.log(kali.grade);
+  console.log(kali.graduate(sherry));
+ 
 
 
   //End of Challenge
